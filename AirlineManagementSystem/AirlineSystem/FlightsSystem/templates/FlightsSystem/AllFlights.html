@@ -1,0 +1,20 @@
+{% extends 'FlightsSystem/layout.html' %} {% block body %}
+<center>
+  <table class="table table-dark table-hover">
+    <th>ID</th>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Duration</th>
+
+    {% for aflight in AllFlights %}
+    <tr>
+      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.id}}</a></td>
+      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.origin}}</a></td>
+      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.distination}}</a></td>
+      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.duration}}</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</center>
+
+{% endblock %}

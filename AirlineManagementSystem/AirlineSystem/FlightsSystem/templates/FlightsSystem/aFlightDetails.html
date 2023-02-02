@@ -1,0 +1,87 @@
+{% extends 'FlightsSystem/layout.html' %} {% block body %}
+
+
+<h2>Flight Details</h2>
+<table class="table table-dark table-hover">
+  <th>ID</th>
+  <th>Origin</th>
+  <th>Destination</th>
+  <th>Duration</th>
+  <th>Number of Passengers</th>
+  <tr>
+    <td>{{flight.id}}</td>
+    <td>{{flight.origin}}</td>
+    <td>{{flight.distination}}</td>
+    <td>{{flight.duration}}</td>
+    <td>{{countPassenger}}</td>
+  </tr>
+</table>
+
+<h2>List of Passengers in flight ( {{flight.id}} )</h2>
+
+
+<table class="table table-dark table-hover">
+  <th>ID</th>
+  <th>First Name</th>
+  <th>Last Name </th>
+  <th>Passport Country </th>
+  <th>Passposrt Number </th>
+  <th>Passpor Image </th>
+{% for apassenger in passengersInThisFlight %} 
+    <tr>
+      <td>{{apassenger.id}}</td>
+      <td>{{apassenger.first}}</td>
+      <td>{{apassenger.last}}</td>
+      <td>{{apassenger.passportCountry}}</td>
+      <td>{{apassenger.passportNumber}}</td>
+      <td>
+        <!-- <img src="{{ apassenger.passport_photo.url }}" alt="Passport Photo" width="200" height="200" alt="Passport photo">  -->
+        <a href="#" class="image-link"> <img src="https://th.bing.com/th/id/OIP.zkcuHxmQnWxirU9auX4zbgHaEK?w=322&h=181&c=7&r=0&o=5&dpr=1.1&pid=1.7" alt="Passport Photo" width="100" height="40" alt="Passport photo"> </a>
+      </td>
+    </tr>
+{% endfor %} 
+</table>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Below Script and Div is for image view -->
+<div id="imageModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    // Get the modal
+    var modal = $("#imageModal");
+  
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    $(".image-link").click(function() {
+      modal.css("display", "block");
+      var img = $(this).find("img");
+      $("#img01").attr("src", img.attr("src"));
+      $("#caption").text(img.attr("alt"));
+    });
+  
+    // Get the <span> element that closes the modal
+    var span = $(".close")[0];
+  
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() { 
+      modal.css("display", "none");
+    }
+  });
+  </script>
+{% endblock %}
+
+
+

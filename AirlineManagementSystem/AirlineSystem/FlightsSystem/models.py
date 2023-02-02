@@ -9,18 +9,18 @@ class AirportsModel(models.Model):
     country = models.CharField(max_length=30)
 
     def __str__(self):
-        return f"{self.code}, {self.city}, {self.country}"
+        return f"({self.code}) {self.city}, {self.country}"
 
 
 class FlightModel(models.Model):
-    orgin = models.ForeignKey(
+    origin = models.ForeignKey(
         AirportsModel, on_delete=models.CASCADE, max_length=30, related_name="departures")
     distination = models.ForeignKey(
         AirportsModel, on_delete=models.CASCADE, related_name="arrivals", max_length=30)
     duration = models.IntegerField()
 
     def __str__(self):
-        return f"{self.orgin}, {self.distination}, {self.duration}"
+        return f"{self.origin}, {self.distination}, {self.duration}"
 
 
 class PassengersModel(models.Model):
@@ -28,7 +28,8 @@ class PassengersModel(models.Model):
     last = models.CharField(max_length=20)
     passportCountry = models.CharField(max_length=30)
     passportNumber = models.IntegerField()
-    passengerPic = models.BinaryField(null=True, blank=True)
+    passport_photo = models.ImageField(
+        upload_to='passport_photos/', default='passenger_photos/default.jpg', null=True)
     flights = models.ManyToManyField(
         FlightModel, blank=True, related_name="passengers")
 
