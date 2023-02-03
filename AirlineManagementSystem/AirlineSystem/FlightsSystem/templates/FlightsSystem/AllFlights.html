@@ -8,13 +8,35 @@
 
     {% for aflight in AllFlights %}
     <tr>
-      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.id}}</a></td>
-      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.origin}}</a></td>
-      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.distination}}</a></td>
-      <td><a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}">{{aflight.duration}}</a></td>
+      <td>
+        <a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}"
+          >{{aflight.id}}</a
+        >
+      </td>
+      <td>
+        <a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}"
+          >{{aflight.origin}}</a
+        >
+      </td>
+      <td>
+        <a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}"
+          >{{aflight.distination}}</a
+        >
+      </td>
+      <td>
+        <a href="{% url 'FlightsSystem:aFlightDetails' aflight.id %}"
+          >{{aflight.duration}}</a
+        >
+      </td>
     </tr>
     {% endfor %}
   </table>
 </center>
+
+<div style="text-align: center">
+  <button class="btn btn-dark">
+    <a href="{% url 'FlightsSystem:index' %}">Home Page</a>
+  </button>
+</div>
 
 {% endblock %}

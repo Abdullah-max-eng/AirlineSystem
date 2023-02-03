@@ -40,7 +40,7 @@ class PassengersModel(models.Model):
 class AirlinesModel(models.Model):
     airlineName = models.CharField(max_length=30)
     flights = models.ForeignKey(
-        FlightModel, on_delete=models.CASCADE, blank=True, null=True, related_name="relatedailine")
+        FlightModel, on_delete=models.CASCADE, blank=True, null=True, related_name="airline")
 
     def __str__(self):
         return f"{self.airlineName}"
@@ -51,7 +51,7 @@ class TicketsModel(models.Model):
                            ('Business', 'Business Class'), ("VIP", 'VIP Class')]
     ticketType = models.CharField(max_length=30, choices=TicketClassesChoice)
     passenger = models.OneToOneField(
-        PassengersModel, on_delete=models.CASCADE, related_name="passenger")
+        PassengersModel, on_delete=models.CASCADE, related_name="ticket")
     airline = models.ForeignKey(
         AirlinesModel, on_delete=models.CASCADE, related_name="tickets")
 

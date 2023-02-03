@@ -1,0 +1,36 @@
+{% extends 'FlightsSystem/layout.html' %} {% block body %}
+
+<h2>Add Passengers</h2>
+
+<!-- <form action="{% url 'FlightsSystem:addpassenger'%}" method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    <div class="form-group">
+      {{ field.label_tag }}
+      {{ field }}
+    </div>
+  {% endfor %}
+  <select name="flight" id="">
+  <option value=""> Select a Flight  </option>
+  {% for aflight in AllFLights %}
+  <option value="{{aflight.id}}"> {{aflight}} 
+  </option>
+  {% endfor %}
+</select>
+  <input type="submit" value="Submit">
+</form> -->
+
+<!-- Uncomment this if you want to use django select to select a flight -->
+<!-- otherwise the above code will do it manually using template value passed to it -->
+
+<!-- ---------------------------------------------------- -->
+
+<form action="{% url 'FlightsSystem:addpassenger'%}" method="post">
+  {% csrf_token %} {% for field in form %}
+  <div class="form-group">{{ field.label_tag }} {{ field }}</div>
+  {% endfor %}
+  <input type="submit" value="Submit" />
+</form>
+
+<!-- -------------------------------------------------------- -->
+{% endblock %}
