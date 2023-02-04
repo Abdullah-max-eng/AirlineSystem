@@ -7,4 +7,6 @@ urlpatterns = [
     path("AllFLights", views.AllFLights, name="AllFLights"),
     path("<int:flight_id>", views.aFlightDetails, name="aFlightDetails"),
     path("AddPassenger", views.addpassenger, name="addpassenger"),
+    path("AllPassengers", views.AllPassengers, name="AllPassengers"),
+    path("<int:Pid>/APassenger", views.pDetails, name="pDetails")
 ]

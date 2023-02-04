@@ -16,6 +16,23 @@ if not os.path.exists(upload_to):
 
 
 # Create your views here.
+
+def pDetails(request, Pid):
+    return render(request, "FlightsSystem/pDetails.html", {
+        "passengerID": Pid
+
+    })
+
+
+def AllPassengers(request):
+    allPassengers = PassengersModel.objects.all()
+    count = allPassengers.count()
+    return render(request, "FlightsSystem/AllPassengers.html", {
+        "allPassengers": allPassengers,
+        "count": count
+    })
+
+
 def index(httprequest):
     return render(httprequest, 'FlightsSystem/index.html')
 
@@ -45,19 +62,34 @@ def aFlightDetails(httprequest, flight_id):
 
 def addpassenger(request):
     if request.method == "POST":
-        form = AddPassengerForm(request.POST, request.FILES)
-        if form.is_valid():
-            first_name = form.cleaned_data['Firstname']
-            last_name = form.cleaned_data['LastName']
-            passport_country = form.cleaned_data['passportCountry']
-            passport_image = form.cleaned_data['passport_image']
-            flights = form.cleaned_data['ListOfAllFlights']
-            # Perform action with the form data, such as saving to database, etc.
-            return render(request, "FlightsSystem/test.html", {
-                "value": first_name
+        Myform = AddPassengerForm(request.POST, request.FILES)
+        if Myform.is_valid():
+            first_name = Myform.cleaned_data['Firstname']
+            last_name = Myform.cleaned_data['LastName']
+            passport_country = Myform.cleaned_data['passportCountry']
+            passport_number = Myform.cleaned_data['passportNumber']
+            passport_image = Myform.cleaned_data['passport_image']
+            flights = Myform.cleaned_data['ListOfAllFlights']
+            passenger = PassengersModel(
+                first=first_name,
+                last=last_name,
+                passportCountry=passport_country,
+                passportNumber=passport_number,
+                passport_photo=passport_image
+            )
+            passenger.save()
+            passenger.flights.set(flights)
+            return render(request, "FlightsSystem/addpassenger.html", {
+                "form": AddPassengerForm(),
+                "info": "Data Added"
             })
-    else:
-        form = AddPassengerForm()
+        else:
+            return render(request, "FlightsSystem/addpassenger.html", {
+                "form": Myform,
+                "errors": Myform.errors
+            })
+    newform = AddPassengerForm()
     return render(request, "FlightsSystem/addpassenger.html", {
-        "form": form
+        "form": newform,
+        "info": "First made Form"
     })

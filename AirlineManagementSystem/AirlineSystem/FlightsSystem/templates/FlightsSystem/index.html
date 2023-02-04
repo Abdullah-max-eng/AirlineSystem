@@ -3,12 +3,12 @@
 <h1>Welcome to Flight Management System.</h1>
 <h3>Please Select one of the below options</h3>
 
-<table>
+<table class="table table-dark table-hover" style= "text-align: center;">
   <tr>
     <td><a href="{% url 'FlightsSystem:AllFLights' %}">All Flights </a></td>
   </tr>
   <tr>
-    <td><a href=""> All Passenger</a></td>
+    <td><a href="{% url 'FlightsSystem:AllPassengers' %}"> All Passenger</a></td>
   </tr>
   <tr>
     <td><a href="">All Airports</a></td>
