@@ -8,5 +8,8 @@ urlpatterns = [
     path("<int:flight_id>", views.aFlightDetails, name="aFlightDetails"),
     path("AddPassenger", views.addpassenger, name="addpassenger"),
     path("AllPassengers", views.AllPassengers, name="AllPassengers"),
-    path("<int:Pid>/APassenger", views.pDetails, name="pDetails")
+    path("<int:Pid>/a_Passenger", views.pDetails, name="pDetails"),
+    path("AllAirports", views.AllAirports, name="AllAirports"),
+    path("<int:AirPort_ID>/AirPortDetails",
+         views.anAirporstDetails, name="anAirportDetial")
 ]

@@ -1,3 +1,66 @@
 {% extends 'FlightsSystem/layout.html' %} {% block body %}
-<h1>{{passengerID}}</h1>
+<h1>List of all Flights for {{Passenger.first}} wiht ID {{Passenger.id}}</h1>
+
+<div style="display: flex; justify-content: center; align-items: center; text-align: center;">
+    
+    <!-- <img src="{{ Passenger.passport_photo.url }}" alt="Passport Photo" width="200" height="200" alt="Passport photo">  -->
+    <a href="#" class="image-link" style="display: inline-block; text-decoration: none; font-style: italic;"> 
+       <img src="https://th.bing.com/th/id/OIP.zkcuHxmQnWxirU9auX4zbgHaEK?w=322&h=181&c=7&r=0&o=5&dpr=1.1&pid=1.7" alt="Passport Photo" width="350" height= "350" alt="Passport photo"> 
+    </a> 
+</div>
+  
+
+<table class="table table-dark table-hover">
+   
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name </th>
+    <th>Passport Country </th>
+    <th>Passposrt Number </th>
+
+    <tr>
+    <td> {{Passenger.id}} </td>
+    <td> {{Passenger.first}} </td>
+    <td> {{Passenger.last}} </td>
+    <td> {{Passenger.passportCountry}} </td>
+    <td> {{Passenger.passportNumber}} </td>
+</tr>
+</table>
+
+
+<h1>List of all Flights, Number of FLights in total : {{count}}</h1>
+<table class="table table-dark table-hover">
+    <th>ID</th>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Duration</th>
+
+    {% for aflight in Flights %}
+    <tr>
+      <td>
+        {{aflight.id}}</a
+        >
+      </td>
+      <td>
+        {{aflight.origin}}</a
+        >
+      </td>
+      <td>
+        {{aflight.distination}}</a
+        >
+      </td>
+      <td>
+        {{aflight.duration}}</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <div style="text-align: center;">
+    <button class="btn btn-dark">
+      <a href="{% url 'FlightsSystem:AllPassengers' %}">All Passengers</a>
+    </button>
+  </div>
+
 {% endblock %}

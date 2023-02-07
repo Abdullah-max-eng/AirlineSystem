@@ -16,10 +16,28 @@ if not os.path.exists(upload_to):
 
 
 # Create your views here.
+def anAirporstDetails(request, AirPort_ID):
+    Airport = AirportsModel.objects.get(pk=AirPort_ID)
+    return render(request, "FlightsSystem/anAirPortDetials.html", {
+        "AirID": AirPort_ID,
+        "Arrivals": Airport.arrivals.all(),
+        "Departures": Airport.departures.all()
+    })
+
+
+def AllAirports(request):
+    allAirports = AirportsModel.objects.all()
+    return render(request, "FlightsSystem/AllAirports.html", {
+        "all": allAirports
+    })
+
 
 def pDetails(request, Pid):
+    passenger = PassengersModel.objects.get(pk=Pid)
     return render(request, "FlightsSystem/pDetails.html", {
-        "passengerID": Pid
+        "Flights": passenger.flights.all(),
+        "Passenger": passenger,
+        "count": passenger.flights.count()
 
     })
 
