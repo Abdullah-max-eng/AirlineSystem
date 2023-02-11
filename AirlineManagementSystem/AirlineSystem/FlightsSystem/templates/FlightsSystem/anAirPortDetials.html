@@ -1,5 +1,61 @@
 {% extends 'FlightsSystem/layout.html' %} {% block body %}
 
-<h1>In this Page we will show the departures and arrivals of the airport</h1>
+<h1>Airport Details, AIR ID {{ AirID }}</h1>
 
-{{AirID}} arrive: {{Arrivals}} dep: {{Departures}} {%endblock%}
+<center>
+  <h2>Departures</h2>
+  <table class="table table-dark table-hover">
+    <th>FLight ID</th>
+    <th>Flight Destination</th>
+    <th>Flight Duration</th>
+
+    {% for aDepartures in Departures %}
+    <tr>
+      <td>{{aDepartures.id}}</td>
+      <td>{{aDepartures.distination}}</td>
+      <td>{{aDepartures.duration}}</td>
+    </tr>
+    {% empty %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+           document.querySelector("#norecorddep").innerHTML = "No Departure to this Airports with ID: {{AirID}}";
+        })
+    </script>
+    {% endfor %}
+  </table>
+
+  <h3 id = "norecorddep"> </h3>
+</center>
+
+<center>
+  <h2>Arrivals </h2>
+  <table class="table table-dark table-hover">
+    <th>FLight ID</th>
+    <th>Flight Origin</th>
+    <th>Flight Duration</th>
+
+    {% for aArrival in Arrivals %}
+    <tr>
+      <td>{{aArrival.id}}</td>
+      <td>{{aArrival.origin}}</td>
+      <td>{{aArrival.duration}}</td>
+    </tr>
+    {% empty %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+           document.querySelector("#norecord").innerHTML = "No Arrival to this Airports with ID: {{AirID}}" 
+        })
+    </script>
+
+     
+    {% endfor %}
+  </table>
+
+
+  <h3 id = "norecord"> </h3> 
+</center>
+
+{% endblock %} {% comment %} {{AirID}} arrive: {{Arrivals}} dep: {{Departures}}
+{%endblock%} {% endcomment %}

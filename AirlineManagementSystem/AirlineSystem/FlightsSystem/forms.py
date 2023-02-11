@@ -5,8 +5,8 @@ from .models import *
 class AddPassengerForm(forms.Form):
     # if we want to make a list to user to select from in django for, we can do the below but we will pass it in the template directrly
     AllFLights = FlightModel.objects.all()
-    flight_choices = [(flight.id, "{} to {} FLight ID = {}".format(
-        flight.origin, flight.distination, flight.duration)) for flight in AllFLights]
+    flight_choices = [(flight.id, "{} to {} Flight ID = {}".format(
+        flight.origin, flight.distination, flight.id)) for flight in AllFLights]
     AllCountries = [
         ('AF', 'Afghanistan'),
         ('AL', 'Albania'),
@@ -85,3 +85,19 @@ class AddPassengerForm(forms.Form):
     # This below code will display a list of all flight, Above code is used to display select using django
     ListOfAllFlights = forms.MultipleChoiceField(
         choices=flight_choices, widget=forms.CheckboxSelectMultiple, label="List of All FLights")
+
+
+class AddaTicketForm(forms.Form):
+    AllFLights = FlightModel.objects.all()
+    all_FLights_Choices = [(flight.id, " {} --- to ---> {} ID({}) ".format(
+        flight.origin, flight.distination, flight.id)) for flight in AllFLights]
+
+    ticket_types = TicketsModel.TicketClassesChoice
+    passenger_choices = [(passenger.id, f"{passenger.first}  {passenger.last}  ({passenger.id})")
+                         for passenger in PassengersModel.objects.filter(ticket__isnull=True)]
+    airline_choices = [(airline.id, airline.airlineName)
+                       for airline in AirlinesModel.objects.all()]
+    ticket_type = forms.ChoiceField(choices=ticket_types)
+    passenger = forms.ChoiceField(choices=passenger_choices)
+    airline = forms.ChoiceField(choices=airline_choices)
+    Flight_for_this_Ticket = forms.ChoiceField(choices=all_FLights_Choices)

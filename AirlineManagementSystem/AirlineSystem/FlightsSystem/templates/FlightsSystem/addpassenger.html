@@ -24,22 +24,32 @@
 <!-- otherwise the above code will do it manually using template value passed to it -->
 
 <!-- ---------------------------------------------------- -->
+<center>
+  <div
+    style="
+      margin-top: 250px;
+      border: 10px solid black;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: darkgoldenrod;
+      width: fit-content;
+    "
+  >
+    <form action="{% url 'FlightsSystem:addpassenger'%}" method="POST">
+      {% csrf_token %} {% for field in form %}
+      <div class="form-group">{{ field.label_tag }} {{ field }}</div>
+      {% endfor %} {% if errors %}
+      <ul>
+        {% for error in errors.items %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
 
-<form action="{% url 'FlightsSystem:addpassenger'%}" method="POST">
-  {% csrf_token %} {% for field in form %}
-  <div class="form-group">{{ field.label_tag }} {{ field }}</div>
-  {% endfor %} {% if errors %}
-  <ul>
-    {% for error in errors.items %}
-    <li>{{ error }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-
-  <input type="submit" value="Submit" />
-</form>
-
-<h1>{{info}}</h1>
-
+      <input type="submit" value="Submit" />
+    </form>
+    <h1>{{info}}</h1>
+  </div>
+</center>
 <!-- -------------------------------------------------------- -->
 {% endblock %}

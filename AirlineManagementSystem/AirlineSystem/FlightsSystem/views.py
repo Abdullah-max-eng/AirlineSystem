@@ -16,6 +16,30 @@ if not os.path.exists(upload_to):
 
 
 # Create your views here.
+
+def ListofTickets(request):
+    AllTickets = TicketsModel.objects.all()
+    
+
+    if(request.method == "POST"):
+        # form implementaiton
+        return render(request,"FlightsSystem/ListofTickets.html",{
+            "allTickets" : AllTickets,
+            "status" : "Data added",
+            "AddTicketForm" : AddaTicketForm() 
+    })
+    
+    
+    
+    
+    return render(request,"FlightsSystem/ListofTickets.html",{
+        "allTickets" : AllTickets,
+        "AddTicketForm" : AddaTicketForm() 
+    })
+
+
+
+
 def anAirporstDetails(request, AirPort_ID):
     Airport = AirportsModel.objects.get(pk=AirPort_ID)
     return render(request, "FlightsSystem/anAirPortDetials.html", {

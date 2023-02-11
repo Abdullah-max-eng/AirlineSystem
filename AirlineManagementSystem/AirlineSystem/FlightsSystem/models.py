@@ -9,7 +9,7 @@ class AirportsModel(models.Model):
     country = models.CharField(max_length=30)
 
     def __str__(self):
-        return f"({self.code}) {self.city}, {self.country}"
+        return f" {self.city} ({self.code}), {self.country}"
 
 
 class FlightModel(models.Model):
@@ -32,7 +32,7 @@ class PassengersModel(models.Model):
         upload_to='passport_photos/', default='passenger_photos/default.jpg', null=True, blank=True)
 
     flights = models.ManyToManyField(
-        FlightModel, blank=True, null=True, related_name="passengers")
+        FlightModel, blank=True, related_name="passengers")
 
     def __str__(self):
         return f"{self.first}, {self.last}, {self.passportNumber}, {self.passportCountry}"
@@ -55,6 +55,8 @@ class TicketsModel(models.Model):
         PassengersModel, on_delete=models.CASCADE, related_name="ticket")
     airline = models.ForeignKey(
         AirlinesModel, on_delete=models.CASCADE, related_name="tickets")
+    flight = models.OneToOneField(
+        FlightModel, null=True, on_delete=models.CASCADE, related_name="ticket")
 
     def __str__(self):
         return f"{self.ticketType}, {self.passenger}"
