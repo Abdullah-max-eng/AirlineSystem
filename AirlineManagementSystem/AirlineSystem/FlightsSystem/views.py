@@ -8,36 +8,31 @@ from .forms import *
 
 
 # Create the subdirectory for passport photos
-subdirectory = 'passport_photos'
-media_root = settings.MEDIA_ROOT
-upload_to = os.path.join(media_root, subdirectory)
-if not os.path.exists(upload_to):
-    os.makedirs(upload_to)
+# subdirectory = 'passport_photos'
+# media_root = settings.MEDIA_ROOT
+# upload_to = os.path.join(media_root, subdirectory)
+# if not os.path.exists(upload_to):
+#     os.makedirs(upload_to)
 
 
 # Create your views here.
 
 def ListofTickets(request):
     AllTickets = TicketsModel.objects.all()
-    
 
-    if(request.method == "POST"):
+    if (request.method == "POST"):
         # form implementaiton
-        return render(request,"FlightsSystem/ListofTickets.html",{
-            "allTickets" : AllTickets,
-            "status" : "Data added",
-            "AddTicketForm" : AddaTicketForm() 
-    })
-    
-    
-    
-    
-    return render(request,"FlightsSystem/ListofTickets.html",{
-        "allTickets" : AllTickets,
-        "AddTicketForm" : AddaTicketForm() 
-    })
+        return render(request, "FlightsSystem/ListofTickets.html", {
+            "allTickets": AllTickets,
+            "status": "Data added",
+            "AddTicketForm": AddaTicketForm(),
+            "AddANotherTicketFomr": AddAnotherTicketForm(),
+        })
 
-
+    return render(request, "FlightsSystem/ListofTickets.html", {
+        "allTickets": AllTickets,
+        "AddTicketForm": AddaTicketForm()
+    })
 
 
 def anAirporstDetails(request, AirPort_ID):
@@ -109,14 +104,14 @@ def addpassenger(request):
             first_name = Myform.cleaned_data['Firstname']
             last_name = Myform.cleaned_data['LastName']
             passport_country = Myform.cleaned_data['passportCountry']
-            passport_number = Myform.cleaned_data['passportNumber']
+            # passport_number = Myform.cleaned_data['passportNumber']
             passport_image = Myform.cleaned_data['passport_image']
             flights = Myform.cleaned_data['ListOfAllFlights']
             passenger = PassengersModel(
                 first=first_name,
                 last=last_name,
                 passportCountry=passport_country,
-                passportNumber=passport_number,
+                # passportNumber=passport_number,
                 passport_photo=passport_image
             )
             passenger.save()

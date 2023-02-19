@@ -27,15 +27,15 @@ class PassengersModel(models.Model):
     first = models.CharField(max_length=10)
     last = models.CharField(max_length=20)
     passportCountry = models.CharField(max_length=30)
-    passportNumber = models.IntegerField()
+    # passportNumber = models.IntegerField()
     passport_photo = models.ImageField(
-        upload_to='passport_photos/', default='passenger_photos/default.jpg', null=True, blank=True)
+        upload_to='images/', null=True, blank=True)
 
     flights = models.ManyToManyField(
         FlightModel, blank=True, related_name="passengers")
 
     def __str__(self):
-        return f"{self.first}, {self.last}, {self.passportNumber}, {self.passportCountry}"
+        return f"{self.first}, {self.last}, {self.passportCountry}"
 
 
 class AirlinesModel(models.Model):
