@@ -104,14 +104,12 @@ def addpassenger(request):
             first_name = Myform.cleaned_data['Firstname']
             last_name = Myform.cleaned_data['LastName']
             passport_country = Myform.cleaned_data['passportCountry']
-            # passport_number = Myform.cleaned_data['passportNumber']
             passport_image = Myform.cleaned_data['passport_image']
             flights = Myform.cleaned_data['ListOfAllFlights']
             passenger = PassengersModel(
                 first=first_name,
                 last=last_name,
                 passportCountry=passport_country,
-                # passportNumber=passport_number,
                 passport_photo=passport_image
             )
             passenger.save()

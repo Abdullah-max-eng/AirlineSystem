@@ -26,8 +26,8 @@ class FlightModel(models.Model):
 class PassengersModel(models.Model):
     first = models.CharField(max_length=10)
     last = models.CharField(max_length=20)
+
     passportCountry = models.CharField(max_length=30)
-    # passportNumber = models.IntegerField()
     passport_photo = models.ImageField(
         upload_to='images/', null=True, blank=True)
 
