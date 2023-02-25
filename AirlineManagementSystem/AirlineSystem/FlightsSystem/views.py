@@ -1,22 +1,52 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from .models import *
 import os
 from django import forms
 from django.conf import settings
 from .forms import *
-
-
-# Create the subdirectory for passport photos
-# subdirectory = 'passport_photos'
-# media_root = settings.MEDIA_ROOT
-# upload_to = os.path.join(media_root, subdirectory)
-# if not os.path.exists(upload_to):
-#     os.makedirs(upload_to)
-
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+
+def LoginPage(request):
+    if (request.method == "POST"):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if (user is not None):
+            login(request, user)
+            # return redirect('admin:index')
+            return redirect('FlightsSystem:index')
+        else:
+            messages.info(request, "Username or password in incorrect")
+
+    return render(request, 'FlightsSystem/Login.html')
+
+
+def LogoutUser(request):
+    logout(request)
+    return redirect('FlightsSystem:Login')
+
+
+def RegistrationPage(request):
+    form = CreateUserForm()
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data['username']
+            messages.success(request, f"Account was created for {user}")
+            return redirect('FlightsSystem:Login')
+
+    context = {'form': form}
+    return render(request, 'FlightsSystem/Register.html', context)
+
+
+@login_required(login_url='FlightsSystem:Login')
 def ListofTickets(request):
     AllTickets = TicketsModel.objects.all()
 
@@ -35,6 +65,7 @@ def ListofTickets(request):
     })
 
 
+@login_required(login_url='FlightsSystem:Login')
 def anAirporstDetails(request, AirPort_ID):
     Airport = AirportsModel.objects.get(pk=AirPort_ID)
     return render(request, "FlightsSystem/anAirPortDetials.html", {
@@ -44,6 +75,7 @@ def anAirporstDetails(request, AirPort_ID):
     })
 
 
+@login_required(login_url='FlightsSystem:Login')
 def AllAirports(request):
     allAirports = AirportsModel.objects.all()
     return render(request, "FlightsSystem/AllAirports.html", {
@@ -51,6 +83,7 @@ def AllAirports(request):
     })
 
 
+@login_required(login_url='FlightsSystem:Login')
 def pDetails(request, Pid):
     passenger = PassengersModel.objects.get(pk=Pid)
     return render(request, "FlightsSystem/pDetails.html", {
@@ -61,6 +94,7 @@ def pDetails(request, Pid):
     })
 
 
+@login_required(login_url='FlightsSystem:Login')
 def AllPassengers(request):
     allPassengers = PassengersModel.objects.all()
     count = allPassengers.count()
@@ -70,10 +104,12 @@ def AllPassengers(request):
     })
 
 
+@login_required(login_url='FlightsSystem:Login')
 def index(httprequest):
     return render(httprequest, 'FlightsSystem/index.html')
 
 
+@login_required(login_url='FlightsSystem:Login')
 def AllFLights(httprequest):
     AllFlights = FlightModel.objects.all()
     return render(httprequest, 'FlightsSystem/AllFlights.html', {
@@ -81,6 +117,7 @@ def AllFLights(httprequest):
     })
 
 
+@login_required(login_url='FlightsSystem:Login')
 def aFlightDetails(httprequest, flight_id):
     Flight = FlightModel.objects.get(pk=flight_id)
     if Flight:
@@ -97,6 +134,27 @@ def aFlightDetails(httprequest, flight_id):
         return HttpResponseNotFound('Flight not found')
 
 
+@login_required(login_url='FlightsSystem:Login')
+def anAirlineDetails(request, AirNum):
+    airline = AirlinesModel.objects.get(pk=AirNum)
+    return render(request, 'FlightsSystem/anAirlineDetails.html', {
+        "airline": airline,
+        "flights": airline.flights
+
+    })
+
+
+@login_required(login_url='FlightsSystem:Login')
+def ListofAirlines(request):
+    if (request.method == "POST"):
+        pass  # Not implemented yet
+    else:
+        return render(request, "FlightsSystem/ListofAirlines.html", {
+            "AllAilines": AirlinesModel.objects.all()
+        })
+
+
+@login_required(login_url='FlightsSystem:Login')
 def addpassenger(request):
     if request.method == "POST":
         Myform = AddPassengerForm(request.POST, request.FILES)
