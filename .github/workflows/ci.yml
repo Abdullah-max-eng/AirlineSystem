@@ -9,5 +9,6 @@ jobs:
       - name: Run Django Unit Test
         run: |
           pip3 install --user django
+          python -m pip install Pillow
           cd AirlineManagementSystem/AirlineSystem
           python manage.py test
