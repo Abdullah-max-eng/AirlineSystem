@@ -36,11 +36,12 @@ class FlightsTest(TestCase):
     def test_AllFlights(self):
         c = Client()
         response = c.get("/AllFLights/")
-        self.assertEqual(response.status_code, 200)
+        # will be 302 since it is not giving the allflights page directly but login page
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(response.context['AllFlights'].count(), 3)
 
     def test_flightid(self):
         c = Client()
         response = c.get("/1/")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(response.context['countPassenger'], 0)
