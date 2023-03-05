@@ -110,7 +110,7 @@ def index(httprequest):
     return render(httprequest, 'FlightsSystem/index.html')
 
 
-@login_required(login_url='FlightsSystem:Login')
+# @login_required(login_url='FlightsSystem:Login')
 def AllFLights(httprequest):
     AllFlights = FlightModel.objects.all()
     return render(httprequest, 'FlightsSystem/AllFlights.html', {
@@ -118,7 +118,7 @@ def AllFLights(httprequest):
     })
 
 
-@login_required(login_url='FlightsSystem:Login')
+# @login_required(login_url='FlightsSystem:Login')
 def aFlightDetails(httprequest, flight_id):
     Flight = FlightModel.objects.get(pk=flight_id)
     if Flight:

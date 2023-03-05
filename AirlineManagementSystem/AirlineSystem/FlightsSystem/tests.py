@@ -33,7 +33,7 @@ class FlightsTest(TestCase):
 
         self.assertFalse(f.is_valid_flight())
 
-    def test_index(self):
+    def test_AllFlights(self):
         c = Client()
         response = c.get("/AllFLights/")
         self.assertEqual(response.status_code, 200)
