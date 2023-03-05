@@ -1,12 +1,12 @@
-name: Testing
+name: Test Workflow
 on: push
 
-jobs: test
-  test_project:
+jobs:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Run django Unit Test
-      run: 
-        pip3 install --user django
-        python manage.py test
+      - uses: actions/checkout@v2
+      - name: Run Django Unit Test
+        run: |
+          pip3 install --user django
+          python manage.py test
