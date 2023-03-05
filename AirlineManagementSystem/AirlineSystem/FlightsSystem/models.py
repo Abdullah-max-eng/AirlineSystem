@@ -22,6 +22,9 @@ class FlightModel(models.Model):
     def __str__(self):
         return f"{self.origin}, {self.distination}, {self.duration}"
 
+    def is_valid_flight(self):
+        return self.origin != self.distination and self.duration > 0
+
 
 class PassengersModel(models.Model):
     first = models.CharField(max_length=10)
